@@ -5,7 +5,7 @@ import CustomersRepository from '../typeorm/repositories/CustomersRepository';
 interface IPaginateCustomer {
   from: number;
   to: number;
-  per_page: number;
+  per_page?: number | null | undefined;
   total: number;
   current_page: number;
   prev_page: number | null;
@@ -17,7 +17,8 @@ class ListCustomerService {
     const customersRepository = getCustomRepository(CustomersRepository);
 
     // const customer = await customersRepository.find();
-    const customer = await customersRepository.createQueryBuilder().paginate;
+    const customer = await customersRepository.createQueryBuilder('customers')
+      .paginate;
     return customer as IPaginateCustomer;
   }
 }
